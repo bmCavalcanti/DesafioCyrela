@@ -10,8 +10,8 @@ namespace Cyrela.Models
         public int Id { get; set; }
         public String Block { get; set; }
         public String Apartment { get; set; }
-        public DateTime DateSale { get; set; }
-        public DateTime DateDelivery { get; set; }
+        public DateTime SaleDate { get; set; }
+        public DateTime DeliveryDate { get; set; }
         public HomeAddress HomeAddress { get; set; }
         public Client Client { get; set; }
     }

@@ -8,7 +8,7 @@ namespace Cyrela.Models
     public class EmployeeDayOff
     {
         public int Id { get; set; }
-        public DateTime date { get; set; }
+        public DateTime DayOffDate { get; set; }
         public Employee Employee { get; set; }
 
     }

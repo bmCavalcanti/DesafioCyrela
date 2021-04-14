@@ -10,8 +10,8 @@ namespace Cyrela.Models
         public int Id { get; set; }
         public String Street { get; set; }
         public String District { get; set; }
-        public String Number { get; set; }
+        public String HomeNumber { get; set; }
         public String Complement { get; set; }
-        public City city { get; set; }
+        public City City { get; set; }
     }
 }

@@ -1,67 +1,49 @@
 ﻿using Cyrela.Models;
+using Cyrela.DAL.Context;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 
-// TESTING WITH MOCK
 namespace Cyrela.DAL
 {
     public class ClientDAL
     {
+        private readonly DataBaseContext context;
+
+        public ClientDAL()
+        {
+            context = new DataBaseContext();
+        }
+
         public IList<Client> List()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["CyrelaConnection"].ConnectionString;
-         
-            OracleConnection Connection = new OracleConnection(connectionString);
-            Connection.Open();
-         
-            OracleCommand Command = new OracleCommand("SELECT * FROM T_USER", Connection);
-            OracleDataReader Reader = Command.ExecuteReader();
-            while (Reader.Read())
-            {
-                var name = Reader[1].ToString();
-            }
-
-            Reader.Close();
-
-            List<Client> Clients = new List<Client>();
-            
-            for (var i = 1; i < 5; i++)
-            {
-                Client Client = new Client();
-                Client.Id = i;
-                Client.FirstName = "Bianca " + i;
-                Client.LastName = "Cavalcanti " + i;
-                Clients.Add(Client);
-            }
-
-            return Clients;
+            return context.Client.ToList<Client>();
         }
 
         public Client Get(int Id)
         {
-            Client client = new Client();
-
-            client.Id = Id;
-            client.FirstName = "Bianca " + Id;
-            client.LastName = "Cavalcanti " + Id;
-
-            return client;
+            return context.Client.Find(Id);
         }
 
         public void Insert(Client client)
         {
-            
+            context.Client.Add(client);
+            context.SaveChanges();
         }
 
         public void Update(Client client)
         {
-            
+            context.Client.Update(client);
+            context.SaveChanges();
         }
 
         public void Delete(int Id)
         {
+            var client = new Client() { Id = Id };
 
+            context.Client.Remove(client);
+            context.SaveChanges();
         }
     }
 }

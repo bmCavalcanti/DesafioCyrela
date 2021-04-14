@@ -8,7 +8,7 @@ namespace Cyrela.Models
     public class Scheduling
     {
         public int Id { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime SchedulingDate { get; set; }
         public DateTime StartsAt { get; set; }
         public Employee Employee { get; set; }
         public Home Home { get; set; }
