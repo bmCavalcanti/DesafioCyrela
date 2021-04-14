@@ -1,8 +1,6 @@
 ﻿using Cyrela.Models;
 using Cyrela.DAL.Context;
-using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 
 namespace Cyrela.DAL

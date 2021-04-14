@@ -1,19 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cyrela.Models
 {
+    [Table("EMPLOYEE")]
     public class Employee
     {
+        [Key]
+        [Column("ID")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public DateTime WorkStartsAt { get; set; }
-        public DateTime WorkEndsAt { get; set; }
-        public bool IsActive { get; set; }
-        public Role Role { get; set; }
 
+        [Required(ErrorMessage = "Nome obrigatório.")]
+        [StringLength(50, ErrorMessage = "O nome deve ter no máximo 50 caracteres.")]
+        [Display(Name = "Nome: ")]
+        [Column("FIRST_NAME")]
+        public String FirstName { get; set; }
+
+        [Required(ErrorMessage = "Sobrenome obrigatório.")]
+        [StringLength(80, ErrorMessage = "O sobrenome deve ter no máximo 80 caracteres.")]
+        [Display(Name = "Sobrenome: ")]
+        [Column("LAST_NAME")]
+        public String LastName { get; set; }
+
+        [Required(ErrorMessage = "Início expediente obrigatório.")]
+        [Display(Name = "Início expediente: ")]
+        [Column("WORK_STARTS_AT")]
+        public int WorkStartsAt { get; set; }
+
+        [Required(ErrorMessage = "Fim expediente obrigatório.")]
+        [Display(Name = "Fim expediente: ")]
+        [Column("WORK_ENDS_AT")]
+        public int WorkEndsAt { get; set; }
+
+        [Display(Name = "Status: ")]
+        [Column("IS_ACTIVE")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Função: ")]
+        [Column("ROLE_ID")]
+        public int RoleId { get; set; }
+
+        // Navigation properties
+        public Role Role { get; set; }
     }
 }
