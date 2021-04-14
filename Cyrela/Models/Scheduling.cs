@@ -37,10 +37,9 @@ namespace Cyrela.Models
         [Column("SCHEDULING_TYPE_ID")]
         public int SchedulingTypeId { get; set; }
 
-        [Required(ErrorMessage = "Serviço obrigatório.")]
         [Display(Name = "Serviço: ")]
         [Column("SERVICE_ID")]
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
 
         // Navigation properties
         public Employee Employee { get; set; }
