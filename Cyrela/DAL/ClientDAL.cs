@@ -1,5 +1,7 @@
 ﻿using Cyrela.Models;
+using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
+using System.Configuration;
 
 // TESTING WITH MOCK
 namespace Cyrela.DAL
@@ -8,6 +10,20 @@ namespace Cyrela.DAL
     {
         public IList<Client> List()
         {
+            var connectionString = ConfigurationManager.ConnectionStrings["CyrelaConnection"].ConnectionString;
+         
+            OracleConnection Connection = new OracleConnection(connectionString);
+            Connection.Open();
+         
+            OracleCommand Command = new OracleCommand("SELECT * FROM T_USER", Connection);
+            OracleDataReader Reader = Command.ExecuteReader();
+            while (Reader.Read())
+            {
+                var name = Reader[1].ToString();
+            }
+
+            Reader.Close();
+
             List<Client> Clients = new List<Client>();
             
             for (var i = 1; i < 5; i++)
