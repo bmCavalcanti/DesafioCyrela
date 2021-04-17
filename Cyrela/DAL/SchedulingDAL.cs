@@ -35,7 +35,7 @@ namespace Cyrela.DAL
                 .Include(s => s.SchedulingStatus)
                 .Include(s => s.SchedulingType)
                 .Include(s => s.Service)
-                .FirstOrDefault(s => s.EmployeeId == Id)
+                .FirstOrDefault(s => s.Id == Id)
             ;
         }
 
@@ -47,16 +47,20 @@ namespace Cyrela.DAL
 
         public void Update(Scheduling scheduling)
         {
-            context.Scheduling.Update(scheduling);
-            context.SaveChanges();
+             context.Scheduling.Update(scheduling);
+             context.SaveChanges();
         }
 
         public void Delete(int Id)
         {
-            var scheduling = new Scheduling() { Id = Id };
-
+            Scheduling scheduling = new Scheduling() { Id = Id };
             context.Scheduling.Remove(scheduling);
             context.SaveChanges();
+        }
+
+        public Scheduling GetSimple(int Id)
+        {
+            return context.Scheduling.Find(Id);
         }
     }
 }

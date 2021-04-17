@@ -7,6 +7,9 @@ namespace Cyrela.Models
     [Table("SCHEDULING_TYPE")]
     public class SchedulingType
     {
+        public static int TECHNICAL_ASSISTANCE = 1;
+        public static int INSPECTION = 2;
+
         [Key]
         [Column("ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

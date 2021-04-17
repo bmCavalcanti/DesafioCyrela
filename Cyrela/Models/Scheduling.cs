@@ -13,32 +13,31 @@ namespace Cyrela.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Data do agendamento obrigatório.")]
-        [Display(Name = "Data: ")]
         [Column("SCHEDULING_DATE")]
         public DateTime SchedulingDate { get; set; }
 
         [Required(ErrorMessage = "Funcionário obrigatório.")]
-        [Display(Name = "Funcionário: ")]
         [Column("EMPLOYEE_ID")]
+        [ForeignKey("EMPLOYEE_ID")]
         public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "Empreendimento obrigatório.")]
-        [Display(Name = "Empreendimento: ")]
         [Column("HOME_ID")]
+        [ForeignKey("HOME_ID")]
         public int HomeId { get; set; }
 
         [Required(ErrorMessage = "Status obrigatório.")]
-        [Display(Name = "Status: ")]
         [Column("SCHEDULING_STATUS_ID")]
+        [ForeignKey("SCHEDULING_STATUS_ID")]
         public int SchedulingStatusId { get; set; }
 
         [Required(ErrorMessage = "Tipo obrigatório.")]
-        [Display(Name = "Tipo: ")]
         [Column("SCHEDULING_TYPE_ID")]
+        [ForeignKey("SCHEDULING_TYPE_ID")]
         public int SchedulingTypeId { get; set; }
 
-        [Display(Name = "Serviço: ")]
         [Column("SERVICE_ID")]
+        [ForeignKey("SERVICE_ID")]
         public int? ServiceId { get; set; }
 
         // Navigation properties

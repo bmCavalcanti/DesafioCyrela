@@ -65,6 +65,11 @@ namespace Cyrela.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 ClientDAL clientDAL = new ClientDAL();
                 clientDAL.Update(client);
                 return Ok();
