@@ -13,19 +13,20 @@ namespace Cyrela.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nome obrigatório.")]
-        [StringLength(50, ErrorMessage = "O nome deve ter no máximo 50 caracteres.")]
-        [Display(Name = "Nome: ")]
+        [StringLength(50, ErrorMessage = "O nome deve ter no máximo {1} caracteres.")]
         [Column("NAME")]
         public String Name { get; set; }
 
         [Required(ErrorMessage = "Meses de garantia obrigatório.")]
-        [Display(Name = "Meses de garantia: ")]
         [Column("MONTHS_WARRANTY")]
         public int MonthsWarranty { get; set; }
 
-        [StringLength(250, ErrorMessage = "O bloco deve ter no máximo 250 caracteres.")]
-        [Display(Name = "Descrição: ")]
+        [StringLength(250, ErrorMessage = "O bloco deve ter no máximo {1} caracteres.")]
         [Column("DESCRIPTION")]
         public String Description { get; set; }
+
+        [Required(ErrorMessage = "A duração do serviço é obrigatória.")]
+        [Column("SERVICE_DURATION")]
+        public double ServiceDuration { get; set; }
     }
 }

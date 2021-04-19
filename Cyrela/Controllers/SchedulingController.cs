@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using Cyrela.Models;
 using Cyrela.DAL;
+using System.Linq;
 
 namespace Cyrela.Controllers
 {
@@ -15,9 +16,9 @@ namespace Cyrela.Controllers
                 IList<Scheduling> list = new SchedulingDAL().List();
                 return Ok(list);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 
@@ -26,7 +27,7 @@ namespace Cyrela.Controllers
             try
             {
                 Scheduling scheduling = new SchedulingDAL().Get(Id);
-                
+
                 if (scheduling == null)
                 {
                     return NotFound();
@@ -44,7 +45,7 @@ namespace Cyrela.Controllers
         {
             try
             {
-                GetErrors(scheduling);
+                ModelErrors(scheduling);
 
                 if (!ModelState.IsValid)
                 {
@@ -103,7 +104,9 @@ namespace Cyrela.Controllers
                     return BadRequest("O empreendimento não pode ser alterado.");
                 }
 
-                GetErrors(scheduling);
+                bool isUpdate = (scheduling.EmployeeId == schedulingOld.EmployeeId);
+
+                ModelErrors(scheduling, isUpdate);
 
                 if (!ModelState.IsValid)
                 {
@@ -119,22 +122,71 @@ namespace Cyrela.Controllers
                 schedulingDAL.Update(schedulingOld);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
-        public void GetErrors(Scheduling scheduling)
+        private void ModelErrors(Scheduling scheduling, bool isUpdate = false)
         {
-            if (scheduling.SchedulingTypeId.Equals(SchedulingType.TECHNICAL_ASSISTANCE) && scheduling.ServiceId == null)
+            try
             {
-                ModelState.AddModelError("scheduling.ServiceId", "Agendamentos do tipo '1 - ASSISTÊNCIA TÉCNICA' devem possuir um serviço.");
-            }
+                Employee employee = new EmployeeDAL().Get(scheduling.EmployeeId);
+                Home home = new HomeDAL().Get(scheduling.HomeId);
+                Service service = new ServiceDAL().Get(scheduling.ServiceId);
 
-            if (scheduling.SchedulingTypeId.Equals(SchedulingType.INSPECTION) && scheduling.ServiceId != null)
+                if (scheduling.SchedulingTypeId.Equals(SchedulingType.TECHNICAL_ASSISTANCE) && scheduling.ServiceId == null)
+                {
+                    ModelState.AddModelError("scheduling.ServiceId", "Agendamentos do tipo '1 - ASSISTÊNCIA TÉCNICA' devem possuir um serviço.");
+                }
+
+                if (scheduling.SchedulingTypeId.Equals(SchedulingType.INSPECTION) && scheduling.ServiceId != null)
+                {
+                    ModelState.AddModelError("scheduling.ServiceId", "Agendamentos do tipo '2 - VISTORIA' não podem possuir serviço.");
+                }
+
+                if (scheduling.SchedulingTypeId == SchedulingType.TECHNICAL_ASSISTANCE && scheduling.SchedulingDate.Date > home.DeliveryDate.AddMonths(service.MonthsWarranty))
+                {
+                    ModelState.AddModelError("scheduling.ServiceId", "Esse serviço está fora da garantia para esse empreendimento.");
+                }
+
+                if (scheduling.SchedulingTypeId == SchedulingType.TECHNICAL_ASSISTANCE && employee.Role.RoleServices.All(rs => rs.ServiceId != service.Id))
+                {
+                    ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não realiza esse serviço.");
+                }
+
+                if (scheduling.SchedulingTypeId == SchedulingType.INSPECTION && employee.Role.Id != Role.INSPECTION)
+                {
+                    ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não realiza vistoria.");
+                }
+
+                if (employee.EmployeeDaysOff.Any(edo => edo.DayOffDate.Date == scheduling.SchedulingDate.Date))
+                {
+                    ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não está disponível para essa data de agendamento.");
+                }
+
+                if (scheduling.SchedulingDate.Hour <= employee.WorkStartsAt && scheduling.SchedulingDate.Hour > employee.WorkEndsAt)
+                {
+                    ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não está disponível para esse horário de agendamento.");
+                }
+
+                if (!isUpdate)
+                {
+                    if (employee.Schedules.Any(s => 
+                            scheduling.SchedulingDate >= s.SchedulingDate && 
+                            scheduling.SchedulingDate <= s.SchedulingDate.AddHours(service.ServiceDuration) &&
+                            s.SchedulingStatusId == SchedulingStatus.WAITING
+                        )
+                    )
+                    {
+                        ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não está disponível para essa data e/ou horário de agendamento.");
+                    }
+                }
+            }
+            catch (Exception)
             {
-                ModelState.AddModelError("scheduling.ServiceId", "Agendamentos do tipo '2 - VISTORIA' não podem possuir serviço.");
+                ModelState.AddModelError("Message", "Erro interno");
             }
         }
     }

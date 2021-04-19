@@ -53,8 +53,7 @@ namespace Cyrela.DAL
 
         public void Delete(int Id)
         {
-            Scheduling scheduling = new Scheduling() { Id = Id };
-            context.Scheduling.Remove(scheduling);
+            context.Scheduling.Remove(new Scheduling() { Id = Id });
             context.SaveChanges();
         }
 

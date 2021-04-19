@@ -163,11 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\SchedulingController.cs" />
-    <Compile Include="DAL\ClientDAL.cs" />
     <Compile Include="DAL\Context\DataBaseContext.cs" />
+    <Compile Include="DAL\EmployeeDAL.cs" />
+    <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\SchedulingDAL.cs" />
+    <Compile Include="DAL\ServiceDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
