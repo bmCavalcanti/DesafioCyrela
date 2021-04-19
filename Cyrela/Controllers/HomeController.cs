@@ -2,6 +2,7 @@
 using Cyrela.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace Cyrela.Controllers
@@ -23,9 +24,10 @@ namespace Cyrela.Controllers
                 HomeStatus nextHomeStatus = null;
 
                 int index = -1;
+
                 for (int i = 0; i < homeStatus.Count; i++)
                 {
-                    if (homeStatus[i].Id == home.HomeStatus.Id)
+                    if (homeStatus[i].Id == home.HomeStatusId)
                     {
                         index = ++i;
                         break;

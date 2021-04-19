@@ -173,7 +173,7 @@ namespace Cyrela.Controllers
                     ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não está disponível para essa data de agendamento.");
                 }
 
-                if (scheduling.SchedulingDate.Hour <= employee.WorkStartsAt && scheduling.SchedulingDate.Hour > employee.WorkEndsAt)
+                if (scheduling.SchedulingDate.Hour < employee.WorkStartsAt || scheduling.SchedulingDate.Hour >= employee.WorkEndsAt)
                 {
                     ModelState.AddModelError("scheduling.EmployeeId", "Esse funcionário não está disponível para esse horário de agendamento.");
                 }
