@@ -45,6 +45,11 @@ namespace Cyrela.Controllers
         {
             try
             {
+                if (scheduling.SchedulingDate < DateTime.Now)
+                {
+                    ModelState.AddModelError("scheduling.SchedulingDate", "A data do agendamento não pode ser anterior a atual.");
+                }
+
                 ModelErrors(scheduling);
 
                 if (!ModelState.IsValid)
@@ -67,13 +72,15 @@ namespace Cyrela.Controllers
             try
             {
                 SchedulingDAL schedulingDAL = new SchedulingDAL();
+                Scheduling scheduling = schedulingDAL.GetSimple(Id);
 
-                if (schedulingDAL.GetSimple(Id) == null)
+                if (scheduling == null)
                 {
                     return NotFound();
                 }
 
-                schedulingDAL.Delete(Id);
+                scheduling.SchedulingStatusId = SchedulingStatus.CANCELED;
+                schedulingDAL.Update(scheduling);
                 return Ok();
             }
             catch (Exception e)
@@ -186,7 +193,7 @@ namespace Cyrela.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError("Message", "Erro interno");
+                ModelState.AddModelError("Message", "Erro interno.");
             }
         }
     }

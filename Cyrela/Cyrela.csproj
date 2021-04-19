@@ -163,10 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SchedulingController.cs" />
     <Compile Include="DAL\Context\DataBaseContext.cs" />
     <Compile Include="DAL\EmployeeDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
+    <Compile Include="DAL\HomeStatusDAL.cs" />
     <Compile Include="DAL\SchedulingDAL.cs" />
     <Compile Include="DAL\ServiceDAL.cs" />
     <Compile Include="Global.asax.cs">
@@ -178,6 +180,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeDayOff.cs" />
     <Compile Include="Models\Home.cs" />
+    <Compile Include="Models\HomeStatus.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RoleService.cs" />
     <Compile Include="Models\Scheduling.cs" />

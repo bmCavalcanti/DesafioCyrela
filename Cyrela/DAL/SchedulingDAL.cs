@@ -18,8 +18,11 @@ namespace Cyrela.DAL
         public IList<Scheduling> List()
         {
             return context.Scheduling
-                .Include(e => e.Employee)
                 .Include(s => s.Home)
+                .Include(s => s.Home.HomeAddress)
+                .Include(s => s.Home.HomeAddress.City)
+                .Include(s => s.Home.HomeAddress.City.State)
+                .Include(s => s.Home.Client)
                 .Include(s => s.SchedulingStatus)
                 .Include(s => s.SchedulingType)
                 .Include(s => s.Service)
@@ -30,8 +33,11 @@ namespace Cyrela.DAL
         public Scheduling Get(int Id)
         {
             return context.Scheduling
-                .Include(s => s.Employee)
                 .Include(s => s.Home)
+                .Include(s => s.Home.HomeAddress)
+                .Include(s => s.Home.HomeAddress.City)
+                .Include(s => s.Home.HomeAddress.City.State)
+                .Include(s => s.Home.Client)
                 .Include(s => s.SchedulingStatus)
                 .Include(s => s.SchedulingType)
                 .Include(s => s.Service)

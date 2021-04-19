@@ -11,6 +11,7 @@ namespace Cyrela.DAL.Context
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Home> Home { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
+        public DbSet<HomeStatus> HomeStatus { get; set; }
         public DbSet<City> City { get; set; }
         public DbSet<EmployeeDayOff> EmployeeDayOff { get; set; }
         public DbSet<Role> Role { get; set; }

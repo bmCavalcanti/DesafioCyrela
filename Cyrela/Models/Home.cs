@@ -43,9 +43,16 @@ namespace Cyrela.Models
         [Column("CLIENT_ID")]
         public int ClientId { get; set; }
 
+        [Display(Name = "Status: ")]
+        [Required(ErrorMessage = "Status obrigatório.")]
+        [Column("HOME_STATUS_ID")]
+        public int HomeStatusId { get; set; }
+
         // Navigation properties
         public HomeAddress HomeAddress { get; set; }
 
         public Client Client { get; set; }
+
+        public HomeStatus HomeStatus { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace Cyrela.Models
         [Column("DESCRIPTION")]
         public String Description { get; set; }
 
-        [Required(ErrorMessage = "A duração do serviço é obrigatória.")]
+        [Required(ErrorMessage = "A duração em horas do serviço é obrigatória.")]
         [Column("SERVICE_DURATION")]
-        public double ServiceDuration { get; set; }
+        public int ServiceDuration { get; set; }
     }
 }
