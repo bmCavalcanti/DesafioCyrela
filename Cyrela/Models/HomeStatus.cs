@@ -20,5 +20,9 @@ namespace Cyrela.Models
         [Required(ErrorMessage = "Ordem obrigatória.")]
         [Column("STATUS_ORDER")]
         public double StatusOrder { get; set; }
+
+        [StringLength(250, ErrorMessage = "A descrição deve ter no máximo {1} caracteres.")]
+        [Column("DESCRIPTION")]
+        public String Description { get; set; }
     }
 }

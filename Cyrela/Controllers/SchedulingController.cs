@@ -16,9 +16,9 @@ namespace Cyrela.Controllers
                 IList<Scheduling> list = new SchedulingDAL().List();
                 return Ok(list);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -83,21 +83,21 @@ namespace Cyrela.Controllers
                 schedulingDAL.Update(scheduling);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
         public IHttpActionResult Put(int Id, [FromBody] Scheduling scheduling)
         {
-            if (Id != scheduling.Id)
-            {
-                return BadRequest("Os IDs de identificação não podem ser diferentes");
-            }
-
             try
             {
+                if (Id != scheduling.Id)
+                {
+                    return BadRequest("Os IDs de identificação não podem ser diferentes");
+                }
+
                 SchedulingDAL schedulingDAL = new SchedulingDAL();
 
                 Scheduling schedulingOld = schedulingDAL.GetSimple(scheduling.Id);

@@ -1,24 +1,23 @@
 ﻿using Cyrela.DAL.Context;
 using Cyrela.Models;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Web;
 
 namespace Cyrela.DAL
 {
-    public class HomeStatusDAL
+    public class HomeAddressDAL
     {
         private readonly DataBaseContext context;
 
-        public HomeStatusDAL()
+        public HomeAddressDAL()
         {
             context = new DataBaseContext();
         }
 
-        public IList<HomeStatus> List()
+        public void Update(HomeAddress homeAddress)
         {
-            return context.HomeStatus.ToList<HomeStatus>();
+            context.HomeAddress.Update(homeAddress);
+            context.SaveChanges();
         }
     }
 }

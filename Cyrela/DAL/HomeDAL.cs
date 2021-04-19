@@ -21,8 +21,15 @@ namespace Cyrela.DAL
                 .Include(e => e.HomeAddress)
                 .Include(e => e.HomeAddress.City)
                 .Include(e => e.HomeAddress.City.State)
+                .Include(e => e.Client)
                 .FirstOrDefault(e => e.Id == Id)
             ;
+        }
+
+        public void Update(Home home)
+        {
+            context.Home.Update(home);
+            context.SaveChanges();
         }
     }
 }

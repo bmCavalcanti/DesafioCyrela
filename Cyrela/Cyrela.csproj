@@ -167,6 +167,7 @@
     <Compile Include="Controllers\SchedulingController.cs" />
     <Compile Include="DAL\Context\DataBaseContext.cs" />
     <Compile Include="DAL\EmployeeDAL.cs" />
+    <Compile Include="DAL\HomeAddressDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\HomeStatusDAL.cs" />
     <Compile Include="DAL\SchedulingDAL.cs" />
