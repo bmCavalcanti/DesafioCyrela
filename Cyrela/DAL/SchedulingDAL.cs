@@ -15,7 +15,7 @@ namespace Cyrela.DAL
             context = new DataBaseContext();
         }
 
-        public IList<Scheduling> List()
+        public IList<Scheduling> ListByClient(int ClientId)
         {
             return context.Scheduling
                 .Include(s => s.Home)
@@ -26,6 +26,7 @@ namespace Cyrela.DAL
                 .Include(s => s.SchedulingStatus)
                 .Include(s => s.SchedulingType)
                 .Include(s => s.Service)
+                .Where(s => s.Home.ClientId == ClientId)
                 .ToList<Scheduling>()
             ;
         }

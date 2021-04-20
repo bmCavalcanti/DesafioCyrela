@@ -9,31 +9,33 @@ namespace Cyrela.Controllers
 {
     public class SchedulingController : ApiController
     {
-        public IHttpActionResult Get()
+        private static string TYPE_BY_ID = "BY_ID";
+        private static string TYPE_BY_CLIENT = "BY_CLIENT_ID";
+
+        public IHttpActionResult Get(int Id, string type = "BY_ID")
         {
             try
             {
-                IList<Scheduling> list = new SchedulingDAL().List();
-                return Ok(list);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        public IHttpActionResult Get(int Id)
-        {
-            try
-            {
-                Scheduling scheduling = new SchedulingDAL().Get(Id);
-
-                if (scheduling == null)
+                if (type == TYPE_BY_ID)
                 {
-                    return NotFound();
-                }
+                    Scheduling scheduling = new SchedulingDAL().Get(Id);
 
-                return Ok(scheduling);
+                    if (scheduling == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(scheduling);
+                }
+                else if (type == TYPE_BY_CLIENT)
+                {
+                    IList<Scheduling> list = new SchedulingDAL().ListByClient(Id);
+                    return Ok(list);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception)
             {
