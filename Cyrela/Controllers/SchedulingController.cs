@@ -182,9 +182,10 @@ namespace Cyrela.Controllers
 
                 if (!isUpdate)
                 {
+                    int duration = (scheduling.SchedulingTypeId == SchedulingType.TECHNICAL_ASSISTANCE ? service.ServiceDuration : 4);
                     if (employee.Schedules.Any(s => 
                             scheduling.SchedulingDate >= s.SchedulingDate && 
-                            scheduling.SchedulingDate <= s.SchedulingDate.AddHours(service.ServiceDuration) &&
+                            scheduling.SchedulingDate <= s.SchedulingDate.AddHours(duration) &&
                             s.SchedulingStatusId == SchedulingStatus.WAITING
                         )
                     )
